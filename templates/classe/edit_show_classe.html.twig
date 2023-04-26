@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une classe{% endblock %}
+
+{% block body %}
+    <h1>Modifier la classe "{{ classe.getNomClasse() }}"</h1>
+
+{{ form_start(form) }}
+    <div class="mb-4">
+        {{ form_label(form.nom_classe, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+        {{ form_widget(form.nom_classe, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.nom_classe) }}
+    </div>
+    <div class="mb-4">
+        {{ form_label(form.section_classe, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+        {{ form_widget(form.section_classe, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.section_classe) }}
+    </div>
+
+
+    <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
+    <a href="{{ path('app_classe_show', {'id': classe.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>
+    
+    
+{{ form_end(form) }}    
+
+
+
+
+
+
+{% endblock %}
+
+

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la classe "{{ classe.getNomClasse() }}"{% endblock %}
+
+{% block body %}
+    <h5>Détails de la classe "{{ classe.getNomClasse() }}"</h5><br>
+
+    <h5 class="mb-2.5 text-xl font-medium leading-tight">
+    Nom : 
+    <span
+        class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+        >{{ classe.getNomClasse() }}</span>
+    </h5>
+    <h5 class="mb-2.5 text-xl font-medium leading-tight">
+    Section : 
+    <span
+        class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+        >{{ classe.getSectionClasse() }}</span>
+    </h5>
+    <h5 class="mb-2.5 text-xl font-medium leading-tight">
+    École : 
+    <span
+        class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+        >{{ classe.getEcole().getNomEcole() }}</span>
+    </h5><br>
+    <!-- Bouton pour modifier les informations d'une classe --> 
+    <a href="{{ path('app_classe_edit', {'id': classe.getId()}) }}" class="inline-block bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">{{ 'Modifier'|trans }}</a>
+    
+    <!-- Bouton pour revenir a lapage de l'information de l'école --> 
+    <a href="{{ path('app_ecole_show', {'id': classe.getEcole().getId()}) }}" class="inline-block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">{{ 'Retour'|trans }}</a>
+    <br><br>
+
+    
+    <li>Eleve :</li> 
+    <br>
+    <ul>
+            {% for eleve in classe.eleves %}
+                <a href="{{ path('app_eleve_show', {'id': classe.id}) }}">{{ eleve.getNomEleve }}</a><br>
+            {% endfor %}
+    </ul>
+   
+{% endblock %}

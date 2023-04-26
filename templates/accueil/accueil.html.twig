@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}GesSchool!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {%  block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {%  block javascripts %}
+            {{ encore_entry_script_tags('app') }}            
+        {% endblock %}
+
+    </head>
+    
+
+
+
+    <body>
+
+        <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <!-- Mobile menu button-->
+                <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <!--
+                    Icon when menu is closed.
+
+                    Menu open: "hidden", Menu closed: "block"
+                -->
+                <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+                <!--
+                    Icon when menu is open.
+
+                    Menu open: "block", Menu closed: "hidden"
+                -->
+                <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                </button>
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex flex-shrink-0 items-center">
+                <img class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                </div>
+                <div class="hidden sm:ml-6 sm:block">
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
+
+                   
+                </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Login</a>
+
+            
+        </div>
+    </nav>
+
+        <!-- Container for demo purpose -->
+<div class="container my-24 px-6 mx-auto">
+
+  <!-- Section: Design Block -->
+  <section class="mb-32 text-gray-800">
+    <style>
+      .zoom:hover img {
+        transform: scale(1.1);
+      }
+    </style>
+
+    <h2 class="text-3xl font-bold mb-12 text-center">
+      Environnement de technologie  <u class="text-blue-600">projet GesSchool</u>
+    </h2>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Hollywood exhibition</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/044.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Genius Loci</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/045.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Big Apple</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Sun City</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/048.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Paris flavor</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
+        style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
+        <img src="https://mdbootstrap.com/img/new/standard/city/049.jpg"
+          class="w-full transition duration-300 ease-linear align-middle" />
+        <a href="#!">
+          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
+            style="background-color: rgba(0, 0, 0, 0.3)">
+            <div class="flex justify-start items-end h-full">
+              <h5 class="text-lg font-bold text-white m-6">Sky is the limit</h5>
+            </div>
+          </div>
+          <div class="hover-overlay">
+            <div
+              class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
+              style="background-color: rgba(253, 253, 253, 0.15)"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </section>
+  <!-- Section: Design Block -->
+  
+</div>
+<!-- Container for demo purpose -->
+
+    
+
+        
+        
+       
+
+    </body>
+
+    
+
+
+</html>
