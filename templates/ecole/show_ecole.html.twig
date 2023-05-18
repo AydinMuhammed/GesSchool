@@ -3,139 +3,196 @@
 {% block title %}Détails de l'école{% endblock %}
 
 {% block body %}
-        <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
-                Détails de l'école "{{ ecole.getNomEcole() }}"
-        </h1>
 
-        <h5 class="mb-2.5 text-xl font-medium leading-tight">
-            Nom : 
-            <span
-                class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
-                >{{ ecole.getNomEcole() }}
-            </span>
-        </h5>
-        <h5 class="mb-2.5 text-xl font-medium leading-tight">
-            Adresse : 
-            <span
-                class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
-                >{{ ecole.getAdresseEcole() }}
-            </span>
-        </h5>
-        <h5 class="mb-2.5 text-xl font-medium leading-tight">
-            Téléphone :
-            <span
-                class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
-                >{{ ecole.getTelephoneEcole() }}
-            </span>
-        </h5>
 
-            
-        <a href="{{ path('app_ecole_edit', {'id': ecole.getId()}) }}" class="inline-block bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">{{ 'Modifier'|trans }}</a>
-        <a href="{{ path('app_ecole') }}" class="inline-block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">Retour à la liste des écoles</a>
-
-            <br><br><br>
-<div class="grid grid-cols-2 gap-4 items-center">
-    <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
-        Liste des classes :
-    </h1>
-    <!-- ajouter lien pour le bouton ajouter sur un formulaire -->
-    <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-yellow-500 hover:bg-yellow-600 justify-self-start">
-        Ajouter une classe pour l'école "{{ ecole.getNomEcole() }}"
-    </a>
-</div><br>
-            
-
-            <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                    <div class="overflow-hidden">
-                        <table class="min-w-full text-left text-sm font-light">
-                        <thead class="border-b font-medium dark:border-neutral-500">
-                            <tr>
-                            <th scope="col" class="px-6 py-4">Nom école</th>
-                            <th scope="col" class="px-6 py-4">nom classe</th>
-                            <th scope="col" class="px-6 py-4">section de la classe</th>
-                            <th scope="col" class="px-6 py-4">Détails</th>
-                            <th scope="col" class="px-6 py-4">Supprimer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for classe in ecole.classes %}
-                            <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
-                            <td class="whitespace-nowrap px-6 py-4">{{ ecole.getNomEcole }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ classe.getNomClasse }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ classe.getSectionClasse }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <a href="{{ path('app_classe_show', {'id': classe.id}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0">
-                                Détails des classes
-                                </a>
-                            </td>
-
-                            <!-- ajouter lien por supprimer une classe -->
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
-                                Supprimer
-                                </a>
-                            </td>            
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
+<!--   Pop up qui affiche le message de la foncion _____________ du controller EcoleController.php   -->
+    {% for flashMessage in app.flashes('success') %}
+        <!-- Fenêtre modale -->
+        <div id="notificationModal" class="fixed z-10 inset-0 overflow-y-auto">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!-- Fond de la modale -->
+                <div class="fixed inset-0 transition-opacity">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
-            </div>            
-
-
-            
-            <div class="grid grid-cols-2 gap-4 items-center">
-                <h4 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
-                    Liste des élèves de l'école {{ ecole.getNomEcole() }}                
-                </h4>
-            </div>
-            
-            {% if eleves is empty %}
-                <p>Aucun élève trouvé.</p>
-            {% else %}
-            <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                    <div class="overflow-hidden">
-                        <table class="min-w-full text-left text-sm font-light">
-                        <thead class="border-b font-medium dark:border-neutral-500">
-                            <tr>
-                            <th scope="col" class="px-6 py-4">Nom élève</th>
-                            <th scope="col" class="px-6 py-4">Prenom  élève</th>
-                            <th scope="col" class="px-6 py-4">Détails</th>
-                            <th scope="col" class="px-6 py-4">Supprimer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for eleve in eleves %}
-                            <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
-                            <td class="whitespace-nowrap px-6 py-4">{{ eleve.getNomEleve() }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">{{ eleve.getPrenomEleve() }}</td>
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0">
-                                Détails de "{{ eleve.getNomEleve() }} {{ eleve.getPrenomEleve() }}"
-                                </a>
-                            </td>
-
-                            <!-- ajouter lien por supprimer une classe -->
-                            <td class="whitespace-nowrap px-6 py-4">
-                                <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
-                                Supprimer
-                                </a>
-                            </td>            
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        </table>
+    
+                <!-- Contenu de la modale -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <!-- Icône de notification -->
+                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <!-- Message de notification -->
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                    Succès !
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        {{ flashMessage }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" onclick="window.location.href='{{ path('app_ecole_show', {'id': ecole.getId()}) }}'" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Fermer
+                        </button>
                     </div>
                 </div>
             </div>
-            {% endif %}
+        </div>
+    {% endfor %}
+<!--   fin   -->
+
+
+        <div class="flex justify-center ">
+            <div class="bg-white rounded-lg p-8">
+                <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary text-center">
+                    Détails de l'école "{{ ecole.getNomEcole() }}"
+                </h1>
+
+                <h5 class="mb-2.5 text-xl font-medium leading-tight text-center">
+                    Nom :
+                    <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 mx-auto">
+                        {{ ecole.getNomEcole() }}
+                    </span>
+                </h5>
+                <h5 class="mb-2.5 text-xl font-medium leading-tight text-center">
+                    Adresse :
+                    <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 mx-auto">
+                        {{ ecole.getAdresseEcole() }}
+                    </span>
+                </h5>
+                <h5 class="mb-2.5 text-xl font-medium leading-tight text-center">
+                    Téléphone :
+                    <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 mx-auto">
+                        {{ ecole.getTelephoneEcole() }}
+                    </span>
+                </h5>
+
+                <div class="flex justify-center mt-4">
+                    <a href="{{ path('app_ecole_edit', {'id': ecole.getId()}) }}" class="inline-block bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">{{ 'Modifier'|trans }}</a>
+                    <a href="{{ path('app_ecole') }}" class="inline-block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white focus:outline-none focus:shadow-outline">Retour à la liste des écoles</a>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="grid grid-cols-2 gap-4 items-center">
+        <div class="col-span-2 bg-gray-200 rounded-lg p-8">
+            <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
+                Liste des classes :
+            </h1>
+            <!-- ajouter lien pour le bouton ajouter sur un formulaire -->
+            <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-yellow-500 hover:bg-yellow-600 justify-self-start">
+                Ajouter une classe pour l'école "{{ ecole.getNomEcole() }}"
+            </a>
+        </div>
+
+        <div class="col-span-2">
+            <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 sm:px-4 lg:px-6">
+                        <div class="overflow-hidden">
+                            <table class="min-w-full text-left text-sm font-light">
+                                <thead class="border-b font-medium dark:border-neutral-500">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3">Nom école</th>
+                                        <th scope="col" class="px-4 py-3">Nom classe</th>
+                                        <th scope="col" class="px-4 py-3">Section de la classe</th>
+                                        <th scope="col" class="px-4 py-3">Détails</th>
+                                        <th scope="col" class="px-4 py-3">Supprimer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for classe in ecole.classes %}
+                                        <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
+                                            <td class="whitespace-nowrap px-4 py-3">{{ ecole.getNomEcole }}</td>
+                                            <td class="whitespace-nowrap px-4 py-3">{{ classe.getNomClasse }}</td>
+                                            <td class="whitespace-nowrap px-4 py-3">{{ classe.getSectionClasse }}</td>
+                                            <td class="whitespace-nowrap px-4 py-3">
+                                                <a href="{{ path('app_classe_show', {'id': classe.id}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0">
+                                                    Détails des classes
+                                                </a>
+                                            </td>
+                                            <!-- ajouter lien pour supprimer une classe -->
+                                            <td class="whitespace-nowrap px-4 py-3">
+                                                <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
+                                                    Supprimer
+                                                </a>
+                                            </td>            
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br>
+
+
+            
+
+
+            
+     <div class="grid grid-cols-2 gap-4 items-center">
+        <div class="col-span-2 bg-gray-200 rounded-lg p-8">
+            <h4 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
+                Liste des élèves de l'école "{{ ecole.getNomEcole() }}"                
+            </h4>
+        </div>
+    </div>
+
+    {% if eleves is empty %}
+        <p>Aucun élève trouvé.</p>
+    {% else %}
+
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-4 lg:px-6">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light">
+                            <thead class="border-b font-medium dark:border-neutral-500">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">Nom élève</th>
+                                    <th scope="col" class="px-4 py-3">Prénom élève</th>
+                                    <th scope="col" class="px-4 py-3">Détails</th>
+                                    <th scope="col" class="px-4 py-3">Supprimer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for eleve in eleves %}
+                                    <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
+                                        <td class="whitespace-nowrap px-4 py-3">{{ eleve.getNomEleve() }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3">{{ eleve.getPrenomEleve() }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0">
+                                                Détails de "{{ eleve.getNomEleve() }} {{ eleve.getPrenomEleve() }}"
+                                            </a>
+                                        </td>
+                                        <!-- ajouter lien pour supprimer un élève -->
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
+                                                Supprimer
+                                            </a>
+                                        </td>            
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
           
 

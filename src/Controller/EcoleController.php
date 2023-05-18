@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\EcoleType;
 use Doctrine;
 use App\Entity\Ecole;
+use App\Entity\User;
 use App\Repository\EleveRepository;
 use App\Repository\ClasseRepository;
 use App\Form\EcoleAddType;
@@ -25,35 +26,58 @@ class EcoleController extends AbstractController
     #[Route('/ecole', name: 'app_ecole')]
     public function index(ManagerRegistry $doctrine): Response
     {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
 
-        $ecoles = $doctrine->getRepository(Ecole::class)->findBy([]);
+        // Vérifier si l'utilisateur est connecté
+        if ($user) {
+            // Récupérer les écoles associées à l'utilisateur
+            $ecoles = $user->getEcoles();
 
-        return $this->render('ecole/index.html.twig', [
-            'ecoles' => $ecoles,
-        ]);
+            return $this->render('ecole/index.html.twig', [
+                'ecoles' => $ecoles,
+            ]);
+        } else {
+            // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login');
+        }
+
+        //$ecoles = $doctrine->getRepository(Ecole::class)->findBy([]);
+
+        
     }
 
     
 
-    //fonction pour AFFICHER les details d'une ecole selectionné
+    //fonction pour AFFICHER les details d'une ecole sélectionnée
     #[Route('/ecole/{id}', name: 'app_ecole_show')]
     public function show(Ecole $ecole, EntityManagerInterface $entityManager): Response
     {
-        $eleves = $entityManager->createQuery(
-            'SELECT e
-            FROM App\Entity\Eleve e
-            JOIN e.classe c
-            JOIN c.ecole ecole
-            WHERE ecole.id = :id
-            ORDER BY e.nom_eleve ASC'
-        )->setParameter('id', $ecole->getId())
-        ->getResult();
-    
-        return $this->render('ecole/show_ecole.html.twig', [
-            'ecole' => $ecole,
-            'eleves' => $eleves,
-        ]);
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est connecté et si l'école est associée à l'utilisateur
+        if ($user && $ecole->getUsers()->contains($user)) {
+            $eleves = $entityManager->createQuery(
+                'SELECT e
+                FROM App\Entity\Eleve e
+                JOIN e.classe c
+                JOIN c.ecole ecole
+                WHERE ecole.id = :id
+                ORDER BY e.nom_eleve ASC'
+            )->setParameter('id', $ecole->getId())
+            ->getResult();
+
+            return $this->render('ecole/show_ecole.html.twig', [
+                'ecole' => $ecole,
+                'eleves' => $eleves,
+            ]);
+        }
+
+        // Rediriger vers une page d'erreur ou une autre action appropriée
+        throw $this->createNotFoundException('L\'école demandée n\'existe pas ou vous n\'avez pas l\'autorisation d\'y accéder.');
     }
+
     
 
     // fonctionj pour AJOUTER  une école 
@@ -65,12 +89,26 @@ class EcoleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer l'utilisateur connecté
+            $user = $this->getUser();
+    
+            // Vérifier si l'utilisateur est connecté
+            if ($user) {
+                // Associer l'école à l'utilisateur
+                $ecole->addUser($user);
+            }
+    
             $entityManager->persist($ecole);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_ecole');
         }
+
+        // pour le message qui apparait lorqu'on ajoute une école  
         $this->addFlash('success', 'L\'école a été ajoutée avec succès !');
+        // ---- fin---------
+        
+
 
         return $this->render('ecole/add_ecole.html.twig', [
             'ecole' => $ecole,
@@ -79,53 +117,78 @@ class EcoleController extends AbstractController
     }
     
 
- 
-    // fonction pour MODIFIER les information d'une ecole
+    
+    // fonction pour MODIFIER les informations d'une école
     #[Route('/ecole/{id}/edit', name: 'app_ecole_edit')]
     public function edit(Request $request, Ecole $ecole, ManagerRegistry $doctrine): Response
     {
-        $form = $this->createFormBuilder($ecole)
-            ->add('nom_ecole', TextType::class, [
-                'label' => 'Nom de l\'école'
-            ])
-            ->add('adresse_ecole', TextType::class, [
-                'label' => 'Adresse de l\'école'
-            ])
-            ->add('telephone_ecole', TextType::class, [
-                'label' => 'Téléphone de l\'école'
-            ])
-            ->getForm();
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
 
-        $form->handleRequest($request);
+        // Vérifier si l'utilisateur est connecté et si l'école est associée à l'utilisateur
+        if ($user && $ecole->getUsers()->contains($user)) {
+            $form = $this->createFormBuilder($ecole)
+                ->add('nom_ecole', TextType::class, [
+                    'label' => 'Nom de l\'école'
+                ])
+                ->add('adresse_ecole', TextType::class, [
+                    'label' => 'Adresse de l\'école'
+                ])
+                ->add('telephone_ecole', TextType::class, [
+                    'label' => 'Téléphone de l\'école'
+                ])
+                ->getForm();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $doctrine->getManager()->flush();
+            $form->handleRequest($request);
 
-            $this->addFlash('success', 'L\'école a été modifiée avec succès');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $doctrine->getManager();
+                $entityManager->flush();
+                
+                $this->addFlash('success', 'L\'école a été modifier avec succès !');
+                return $this->redirectToRoute('app_ecole_show', ['id' => $ecole->getId()]);
+            }
 
-            return $this->redirectToRoute('app_ecole_show', ['id' => $ecole->getId()]);
+            return $this->render('ecole/edit_show_ecole.html.twig', [
+                'form' => $form->createView(),
+                'ecole' => $ecole,
+            ]);
         }
 
-        return $this->render('ecole/edit_show_ecole.html.twig', [
-            'form' => $form->createView(),
-            'ecole' => $ecole,
-        ]);
+        
+
+
+        // Rediriger vers une page d'erreur ou une autre action appropriée
+        throw $this->createNotFoundException('L\'école demandée n\'existe pas ou vous n\'avez pas l\'autorisation de la modifier.');
     }
 
 
-    // fonction pour SUPPRIMER une école dedié 
+
+    // fonction pour SUPPRIMER une école dédiée
     #[Route('/ecole/{id}/supprimer', name: 'app_ecole_delete')]
     public function delete(ManagerRegistry $doctrine, Ecole $ecole): Response
     {
-       
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
 
-        $entityManager = $doctrine->getManager();
-        $entityManager->remove($ecole);
-        $entityManager->flush();
+        // Vérifier si l'utilisateur est connecté et si l'école est associée à l'utilisateur
+        if ($user && $ecole->getUsers()->contains($user)) {
+            $entityManager = $doctrine->getManager();
+            $entityManager->remove($ecole);
+            $entityManager->flush();
 
-         //redirect vers le duer
-         return $this->redirectToRoute('app_ecole');
+            $this->addFlash('success', 'L\'école a été supprimer avec succès !');
+            // Redirection après la suppression
+            return $this->redirectToRoute('app_ecole');
+        }
+
+        
+
+
+        // Rediriger vers une page d'erreur ou une autre action appropriée
+        throw $this->createNotFoundException('L\'école demandée n\'existe pas ou vous n\'avez pas l\'autorisation de la supprimer.');
     }
+
 
 
     

@@ -33,9 +33,13 @@ class Ecole
     #[ORM\OneToMany(mappedBy: 'ecole', targetEntity: Classe::class)]
     private Collection $classes;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'ecoles')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->classes = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +133,33 @@ class Ecole
             if ($class->getEcole() === $this) {
                 $class->setEcole(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addEcole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeEcole($this);
         }
 
         return $this;
