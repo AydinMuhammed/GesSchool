@@ -19,6 +19,8 @@ class AppFixtures extends Fixture
         $this->passwordHasher = $passwordHasher;
     }
     
+    // Commande pour inserer les données 
+    // php bin/console doctrine:fixtures:load
     public function load(ObjectManager $manager)
     {
         /** @var PasswordAuthenticatedUserInterface|User $user */
