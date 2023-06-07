@@ -18,170 +18,99 @@
 
 
 
-    <body>
+    <body class="bg-gray-300"> 
+        <!-- BARRE DE NAVIGATION -->
+        <nav class="flex items-center justify-between flex-wrap bg-sky-800 p-2" style="background-color: #1c74bb;">
+            <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <img src="{{asset('images/logo.png')}}" alt="Logo" class="h-20 w-30 mr-2">   
+            </div>
 
-      <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-2">
-        <div class="flex items-center flex-shrink-0 text-white mr-6">
-          <img src="{{asset('images/GesSchool.png')}}" alt="Logo" class="h-20 w-30 mr-2">
-          
-        </div>
-        <div class="block lg:hidden">
-          <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-          </button>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div class="text-sm lg:flex-grow">
+            <div class="block lg:hidden">
+                <button id="menu-toggle" class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
             
-          </div>
-          <div>
-            <a href="{{ path('app_login') }}"  class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Connexion</a>
-          </div>
-        </div>
-      </nav>
+            <div id="menu" class="w-full hidden flex-grow lg:flex lg:items-center lg:w-auto">
+                <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
+                    <li class="nav-item">
+                        <a class="inline-block py-2 px-3 hover:bg-gray-200 rounded-full" href="{{ path('app_login') }}">
+                            <div class="flex items-center relative cursor-pointer whitespace-nowrap">Connexion</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- ........................................................................ -->
 
-
-
-
-
-
+        <!-- SECTION PRESENTATION EQUIPE -->
         <!-- Container for demo purpose -->
-        <div class="container my-24 px-6 mx-auto">
+<div class="container my-24 mx-auto md:px-6">
+  <!-- Section: Design Block -->
+  <section class="mb-32">
+    <h5 class="mb-10 text-center text-xl font-semibold md:mb-6">
+      Qui sommes-nous ?
+    </h5>
 
-          <!-- Section: Design Block -->
-          <section class="mb-32 text-gray-800">
-            <style>
-              .zoom:hover img {
-                transform: scale(1.1);
-              }
-            </style>
+    <!-- Comment -->
+    <div class="mb-12 flex flex-wrap md:mb-0">
+      <div class="w-full md:w-2/12 shrink-0 grow-0 basis-auto">
+        <img src="{{asset('images/muha.jpg')}}"
+          class="mb-6 w-full rounded-lg shadow-lg dark:shadow-black/20" alt="Avatar" />
+      </div>
 
-            <h2 class="text-3xl font-bold mb-12 text-center">
-              Environnement de technologie  <u class="text-blue-600">projet GesSchool</u>
-            </h2>
-            
+      <div class="w-full md:w-10/12 shrink-0 grow-0 basis-auto md:pl-6">
+        <p class="mb-3 font-semibold">Muhammed Aydin</p>
+        <p>
+          Je m'appelle Muhammed AYDIN, et je suis actuellement étudiant en troisième année de licence générale d'informatique à l'école du CNAM de Strasbourg, en alternance avec l'entreprise Impact Web située à Mutzig. Mon rôle dans l'entreprise est de développer des applications web et logicielles pour les clients.
+          Auparavant, j'ai obtenu mon baccalauréat scientifique au Lycée Dr. Koeberlé à Sélestat, puis j'ai poursuivi mes études avec un BTS SIO (services informatiques aux organisations) option développement.
+          Mon ambition est de terminer mon baccalauréat et de poursuivre par une quatrième année de licence en informatique au CNAM. Mon objectif est d'acquérir une solide expertise en développement web et logiciel en travaillant en entreprise pendant quelques années. Cette expérience me sera utile pour créer ma propre société informatique en m'associant à des personnes compétentes et complémentaires afin de répondre efficacement aux besoins de nos clients.
+          En dehors de mes études, j'aime jouer aux jeux vidéo, notamment à League of Legends, ce qui me permet de travailler en équipe et d'améliorer mon niveau d'anglais. Je suis également passionné par le bodybuilding.
+        </p>
+      </div>
+    </div>
+    </br></br>
+    <!-- Comment -->
+    <div class="mb-12 flex flex-wrap md:mb-0">
+      <div class="w-full md:w-2/12 shrink-0 grow-0 basis-auto">
+        <img src="{{asset('images/sefa.jpg')}}"
+          class="mb-6 w-full rounded-lg shadow-lg dark:shadow-black/20" alt="Avatar" />
+      </div>
 
-            <div class="grid lg:grid-cols-3 gap-6">
-              <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-                style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-                <img src="{{asset('images/Symfony.png')}}"
-                  class="w-full transition duration-300 ease-linear align-middle" />
-                <a href="#!">
-                  <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                    style="background-color: rgba(0, 0, 0, 0.3)">
-                    <div class="flex justify-start items-end h-full">
-                      <h5 class="text-lg font-bold text-white m-6">Symfony</h5>
-                    </div>
-                  </div>
-                  <div class="hover-overlay">
-                    <div
-                      class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                      style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                  </div>
-                </a>
-            </div>
+      <div class="w-full md:w-10/12 shrink-0 grow-0 basis-auto md:pl-6">
+        <p class="mb-3 font-semibold">Sefa Gunendi</p>
+        <p>
+          Je m'appelle Sefa GUNENDI et je suis actuellement étudiante en troisième année de licence générale d'informatique au CNAM de Strasbourg, au sein de l'entreprise Impact Web située à Mutzig. Mon rôle dans l'entreprise est de développer des applications web et logicielles pour des clients.
+          Auparavant, j'ai fait un baccalauréat STMG à Haguenau, option systèmes d'information et gestion, puis j'ai poursuivi mes études avec un BTS SIO (services informatiques aux organisations) option développement.
+          Après ma licence (bac+3), je pense travailler un an à temps plein dans le développement web, puis revenir au CNAM pour le bac+4 et terminer par le diplôme d'ingénieur en cours du soir.
+          Mon ambition est de terminer ma licence et de poursuivre avec un titre de quatrième année en informatique au CNAM. Mon objectif est d'acquérir une solide expertise en développement web et logiciel en travaillant en entreprise pendant quelques années.
+        </p>
+      </div>
+    </div>
+    </br></br>
+    <!-- Comment -->
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-2/12 shrink-0 grow-0 basis-auto">
+        <img src="{{asset('images/evan.jpg')}}"
+          class="mb-6 w-full rounded-lg shadow-lg dark:shadow-black/20" alt="Avatar" />
+      </div>
 
-            <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-              style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-              <img src="{{asset('images/Tailwind.png')}}"
-                class="w-full transition duration-300 ease-linear align-middle" />
-              <a href="#!">
-                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                  style="background-color: rgba(0, 0, 0, 0.3)">
-                  <div class="flex justify-start items-end h-full">
-                    <h5 class="text-lg font-bold text-white m-6">Tailwind CSS</h5>
-                  </div>
-                </div>
-                <div class="hover-overlay">
-                  <div
-                    class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                    style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                </div>
-              </a>
-            </div>
-
-            <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-              style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-              <img src="{{asset('images/php.png')}}"
-                class="w-full transition duration-300 ease-linear align-middle" />
-              <a href="#!">
-                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                  style="background-color: rgba(0, 0, 0, 0.3)">
-                  <div class="flex justify-start items-end h-full">
-                    <h5 class="text-lg font-bold text-white m-6">PHP 8</h5>
-                  </div>
-                </div>
-                <div class="hover-overlay">
-                  <div
-                    class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                    style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                </div>
-              </a>
-            </div>
-
-            <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-              style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-              <img src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
-                class="w-full transition duration-300 ease-linear align-middle" />
-              <a href="#!">
-                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                  style="background-color: rgba(0, 0, 0, 0.3)">
-                  <div class="flex justify-start items-end h-full">
-                    <h5 class="text-lg font-bold text-white m-6">Sun City</h5>
-                  </div>
-                </div>
-                <div class="hover-overlay">
-                  <div
-                    class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                    style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                </div>
-              </a>
-            </div>
-
-            <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-              style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-              <img src="https://mdbootstrap.com/img/new/standard/city/048.jpg"
-                class="w-full transition duration-300 ease-linear align-middle" />
-              <a href="#!">
-                <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                  style="background-color: rgba(0, 0, 0, 0.3)">
-                  <div class="flex justify-start items-end h-full">
-                    <h5 class="text-lg font-bold text-white m-6">Paris flavor</h5>
-                  </div>
-                </div>
-                <div class="hover-overlay">
-                  <div
-                    class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                    style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                </div>
-              </a>
-            </div>
-
-            <div class="zoom shadow-lg rounded-lg relative overflow-hidden bg-no-repeat bg-cover"
-                style="background-position: 50%;" data-mdb-ripple="true" data-mdb-ripple-color="dark">
-                <img src="https://mdbootstrap.com/img/new/standard/city/049.jpg"
-                  class="w-full transition duration-300 ease-linear align-middle" />
-                <a href="#!">
-                  <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-                    style="background-color: rgba(0, 0, 0, 0.3)">
-                    <div class="flex justify-start items-end h-full">
-                      <h5 class="text-lg font-bold text-white m-6">Sky is the limit</h5>
-                    </div>
-                  </div>
-                  <div class="hover-overlay">
-                    <div
-                      class="mask absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"
-                      style="background-color: rgba(253, 253, 253, 0.15)"></div>
-                  </div>
-                </a>
-            </div>
-      
-
-          </section>
+      <div class="w-full md:w-10/12 shrink-0 grow-0 basis-auto md:pl-6">
+        <p class="mb-3 font-semibold">Evan Afonso</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Distinctio est ab iure inventore dolorum consectetur? Molestiae
+          aperiam atque quasi consequatur aut? Repellendus alias dolor ad
+          nam, soluta distinctio quis accusantium!
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
 </div>
+<!-- Container for demo purpose -->
     </body>
 
-    
 
 
 </html>
