@@ -5,49 +5,40 @@
 {% block body %}
     
 
+<h3 class="mb-2.5 text-3xl font-medium leading-tight">Ajouter une école</h3>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    {{ form_start(form) }}
+            <div class="mb-4">
+                {{ form_label(form.nomEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.nomEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                {{ form_errors(form.nomEcole) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.telephoneEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.telephoneEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                {{ form_errors(form.telephoneEcole) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.mailEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.mailEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                {{ form_errors(form.mailEcole) }}
+            </div>
 
+            <div class="mb-4">
+                {{ form_label(form.adresseEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.adresseEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                {{ form_errors(form.adresseEcole) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.villeEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                {{ form_widget(form.villeEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                {{ form_errors(form.villeEcole) }}
+            </div>
+            <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
+            <a href="{{ path('app_ecole', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>     
+    {{ form_end(form) }}
+</div>
 
-
-{{ form_start(form) }}
-
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <h1>Ajouter une école</h1>
-        <div class="mb-4">
-            {{ form_label(form.nomEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-            {{ form_widget(form.nomEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            {{ form_errors(form.nomEcole) }}
-        </div>
-
-
-
-
-        
-        <div class="mb-4">
-            {{ form_label(form.telephoneEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-            {{ form_widget(form.telephoneEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            {{ form_errors(form.telephoneEcole) }}
-        </div>
-        <div class="mb-4">
-            {{ form_label(form.mailEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-            {{ form_widget(form.mailEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            {{ form_errors(form.mailEcole) }}
-        </div>
-
-        <div class="mb-4">
-            {{ form_label(form.adresseEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-            {{ form_widget(form.adresseEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            {{ form_errors(form.adresseEcole) }}
-        </div>
-        <div class="mb-4">
-            {{ form_label(form.villeEcole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-            {{ form_widget(form.villeEcole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            {{ form_errors(form.villeEcole) }}
-        
-    </div>
-        </div>
-        <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
-        <a href="{{ path('app_ecole', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>
-{{ form_end(form) }}
 {% endblock %}
 
 

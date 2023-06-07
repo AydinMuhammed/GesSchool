@@ -11,27 +11,30 @@
   >
 </h3>
 
-{{ form_start(form) }}
-    <div class="mb-4">
-        {{ form_label(form.nom_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-        {{ form_widget(form.nom_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-        {{ form_errors(form.nom_ecole) }}
-    </div>
-    <div class="mb-4">
-        {{ form_label(form.adresse_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-        {{ form_widget(form.adresse_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-        {{ form_errors(form.adresse_ecole) }}
-    </div>
-    <div class="mb-4">
-        {{ form_label(form.telephone_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
-        {{ form_widget(form.telephone_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-        {{ form_errors(form.telephone_ecole) }}
-    </div>
-        
-    <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
-    <a href="{{ path('app_ecole_show', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>
-    
-{{ form_end(form) }}    
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  {{ form_start(form) }}
+      <div class="mb-4">
+          {{ form_label(form.nom_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+          {{ form_widget(form.nom_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+          {{ form_errors(form.nom_ecole) }}
+      </div>
+      <div class="mb-4">
+          {{ form_label(form.adresse_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+          {{ form_widget(form.adresse_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+          {{ form_errors(form.adresse_ecole) }}
+      </div>
+      <div class="mb-4">
+          {{ form_label(form.telephone_ecole, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+          {{ form_widget(form.telephone_ecole, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+          {{ form_errors(form.telephone_ecole) }}
+      </div>
+          
+      <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
+      <a href="{{ path('app_ecole_show', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>
+      
+  {{ form_end(form) }}    
+</div>
+
 
 
 

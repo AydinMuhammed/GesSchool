@@ -100,13 +100,16 @@ class EcoleController extends AbstractController
     
             $entityManager->persist($ecole);
             $entityManager->flush();
-    
+            
+            // pour le message qui apparait lorqu'on ajoute une école  
+            $this->addFlash('success', 'L\'école a été ajoutée avec succès !');
             return $this->redirectToRoute('app_ecole');
+            // ---- fin---------
         }
 
-        // pour le message qui apparait lorqu'on ajoute une école  
-        $this->addFlash('success', 'L\'école a été ajoutée avec succès !');
-        // ---- fin---------
+        
+        
+        
         
 
 
