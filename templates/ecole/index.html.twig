@@ -2,15 +2,35 @@
 
 {% block title %}Liste de l'école{% endblock %}
 
-
-
 {% block body %}
     <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
         Liste des écoles
     </h1>
-    
 
-    <!--   Pop up qui affiche le message de la foncion _____________ du controller EcoleController.php   -->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!---------------------------- Pop up qui affiche la demamande de confirmation ------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->    
+<!--   marche avec le script tout en bas du fichier index.html.twog   -->
+    <div id="modal" class="modal hidden fixed inset-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-30"></div>
+        <div class="modal-content bg-white text-center py-6 px-8 rounded shadow-lg">
+            <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+            <div class="mt-4">
+                <button id="confirmBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">Oui</button>
+                <button id="cancelBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">Non</button>
+            </div>
+        </div>
+    </div>
+
+
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------ Pop up qui affiche le message de succes ------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!--   Pop up qui affiche le message de la foncion _____________ du controller EcoleController.php   -->
     {% for flashMessage in app.flashes('success') %}
         <!-- Fenêtre modale -->
         <div id="notificationModal" class="fixed z-10 inset-0 overflow-y-auto">
@@ -57,7 +77,12 @@
 
 
      
-<!--      -->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------- Barre de recherche Dynamique  ---------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+
 <!--   Pour la barre de recherche dynamique  -->  
 <!--   °Ajouter la div ci dessous avec la balise form>   -->  
 <!--   °Créer le fichier Script.js ( il est créé du coup maintenant), ajouter le code pour faire la recherche ( voir js/script.js)  -->
@@ -81,8 +106,12 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
 </div>
 
 
+<!------------------------------------------------------- ----------------------------------------------------->
+<!------------------------------------------------------- ----------------------------------------------------->
+<!------------------------------------------------ Tableau ---------------------------------------------------->
+<!------------------------------------------------------- ----------------------------------------------------->
+<!------------------------------------------------------- -------------------------------------------------- -->
 
-    
     <div class="flex flex-col mr-8 ml-8">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -128,6 +157,12 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
         </div>
     </div>
 
+
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!--------------------------------------------- Script javaScript ------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
+<!------------------------------------------------------- ---------------------------------------------------->
         <script>
             
             // Initialization for ES Users
@@ -138,6 +173,65 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
 
             initTE({ Input });
         </script>
+
+
+        <! --  Pour la suppresion   -->
+        <script>
+            // Sélectionner tous les boutons de suppression ayant la classe 'delete-school'
+            var btnsSuppression = document.querySelectorAll('.delete-school');
+
+            // Parcourir tous les boutons de suppression
+            btnsSuppression.forEach(function(btn) {
+                // Ajouter un écouteur d'événement au clic sur chaque bouton
+                btn.addEventListener('click', function(event) {
+                    event.preventDefault(); // Empêcher le comportement par défaut du lien
+
+                    var elementId = btn.getAttribute('data-id'); // Récupérer l'attribut 'data-id' du bouton
+
+                    // Afficher une boîte de dialogue de confirmation
+                    if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+                        // Si l'utilisateur confirme, rediriger vers l'URL de suppression de l'élément
+                        window.location.href = '/ecole/' + elementId + '/supprimer';
+                    }
+                });
+            });
+        </script>
+
+
+        <!-- Fenêtre modal -->
+        <!--
+        <script>
+            var modal = document.getElementById('modal');
+            var confirmBtn = document.getElementById('confirmBtn');
+            var cancelBtn = document.getElementById('cancelBtn');
+
+            confirmBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+
+                var elementId = confirmBtn.getAttribute('data-id');
+                window.location.href = '/ecole/' + elementId + '/supprimer';
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                // Ajoutez ici la logique de redirection vers la page souhaitée
+                window.location.href = '/app_ecole'; // Exemple de redirection vers la page app_ecole
+            });
+
+            btnsSuppression.forEach(function(btn) {
+                btn.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    var elementId = btn.getAttribute('data-id');
+
+                    modal.classList.remove('hidden');
+                    confirmBtn.setAttribute('data-id', elementId);
+                });
+            });
+        </script>
+        -->
+
+
 
 {% endblock %}
 
