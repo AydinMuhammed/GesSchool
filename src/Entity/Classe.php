@@ -81,22 +81,22 @@ class Classe
         return $this->eleves;
     }
 
-    public function addElefe(Eleve $elefe): self
+    public function addEleve(Eleve $eleve): self
     {
-        if (!$this->eleves->contains($elefe)) {
-            $this->eleves->add($elefe);
-            $elefe->setClasse($this);
+        if (!$this->eleves->contains($eleve)) {
+            $this->eleves->add($eleve);
+            $eleve->setClasse($this);
         }
 
         return $this;
     }
 
-    public function removeElefe(Eleve $elefe): self
+    public function removeEleve(Eleve $eleve): self
     {
-        if ($this->eleves->removeElement($elefe)) {
+        if ($this->eleves->removeElement($eleve)) {
             // set the owning side to null (unless already changed)
-            if ($elefe->getClasse() === $this) {
-                $elefe->setClasse(null);
+            if ($eleve->getClasse() === $this) {
+                $eleve->setClasse(null);
             }
         }
 

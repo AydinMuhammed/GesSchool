@@ -141,7 +141,7 @@
                                             </td>
                                             <!-- ajouter lien pour supprimer une classe -->
                                             <td class="whitespace-nowrap px-4 py-3">
-                                                <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
+                                                <a href="{{ path('app_classe_delete', {'id': classe.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0">
                                                     Supprimer
                                                 </a>
                                             </td>            
