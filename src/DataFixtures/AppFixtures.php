@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
 {
     // Ajout des écoles de test
     $ecoles = [];
-    for ($i = 0; $i < 40; $i++) {
+    for ($i = 0; $i < 60; $i++) {
         $ecole = new Ecole();
         $ecole->setNomEcole('Ecole '.$i);
         $ecole->setTelephoneEcole('0123456789');
@@ -97,7 +97,9 @@ class AppFixtures extends Fixture
     $sefaUser->setDateNaissance($dateNaissance);
     $hashedPassword = $this->passwordHasher->hashPassword($sefaUser, 'Azerty.000');
     $sefaUser->setMotDePasse($hashedPassword);
+    $sefaUser->setRoles(['ROLE_ADMIN']);
     $manager->persist($sefaUser);
+    $manager->flush();
 
     // Utilisateur "user"
     $userUser = new User();
@@ -108,13 +110,28 @@ class AppFixtures extends Fixture
     $userUser->setDateNaissance($dateNaissance);
     $hashedPassword = $this->passwordHasher->hashPassword($userUser, 'Azerty.000');
     $userUser->setMotDePasse($hashedPassword);
+    $userUser->setRoles(['ROLE_USER']);
     $manager->persist($userUser);
+
+    // Utilisateur "test"
+    $testUSer = new User();
+    $testUSer->setEmail('test@test.com');
+    $testUSer->setPrenom('test');
+    $testUSer->setNom('test');
+    $dateNaissance = DateTime::createFromFormat('d/m/Y', '08/10/2000');
+    $testUSer->setDateNaissance($dateNaissance);
+    $hashedPassword = $this->passwordHasher->hashPassword($testUSer, 'Azerty.000');
+    $testUSer->setMotDePasse($hashedPassword);
+    $testUSer->setRoles(['ROLE_USER']);
+    $manager->persist($testUSer);
 
     // Lier les écoles aux utilisateurs
     for ($i = 0; $i < 20; $i++) {
         $sefaUser->addEcole($ecoles[$i]);
         $userUser->addEcole($ecoles[$i + 20]);
+        $testUSer->addEcole($ecoles[$i + 40]);
     }
+    
 
     $manager->flush();
 }

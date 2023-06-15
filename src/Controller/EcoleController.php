@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Form\EcoleType;
 use Doctrine;
-use App\Entity\Ecole;
 use App\Entity\User;
+use App\Entity\Ecole;
+use App\Form\EcoleType;
+use App\Form\EcoleAddType;
 use App\Repository\EleveRepository;
 use App\Repository\ClasseRepository;
-use App\Form\EcoleAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -24,25 +25,29 @@ class EcoleController extends AbstractController
 {
     //fonction pour AFFICHER  les ecoles
     #[Route('/ecole', name: 'app_ecole')]
+    #[IsGranted('ROLE_USER')]
     public function index(ManagerRegistry $doctrine): Response
     {
         // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
+        //$user = $this->getUser();
 
         // Vérifier si l'utilisateur est connecté
-        if ($user) {
+        //if ($user) {
             // Récupérer les écoles associées à l'utilisateur
-            $ecoles = $user->getEcoles();
+        //    $ecoles = $user->getEcoles();
 
-            return $this->render('ecole/index.html.twig', [
-                'ecoles' => $ecoles,
-            ]);
-        } else {
+        //    return $this->render('ecole/index.html.twig', [
+        //        'ecoles' => $ecoles,
+        //    ]);
+        //} else {
             // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-            return $this->redirectToRoute('app_login');
-        }
-
-        //$ecoles = $doctrine->getRepository(Ecole::class)->findBy([]);
+        //    return $this->redirectToRoute('app_login');
+        //}
+        // Récupérer les duer de la BDD
+        $ecoles = $doctrine->getRepository(Ecole::class)->findBy([]);
+        return $this->render('ecole\index.html.twig', [
+            'ecoles' => $ecoles
+        ]);
 
         
     }
@@ -51,6 +56,7 @@ class EcoleController extends AbstractController
 
     //fonction pour AFFICHER les details d'une ecole sélectionnée
     #[Route('/ecole/{id}', name: 'app_ecole_show')]
+    #[IsGranted('ROLE_USER')]
     public function show(Ecole $ecole, EntityManagerInterface $entityManager): Response
     {
         // Récupérer l'utilisateur connecté
@@ -82,6 +88,7 @@ class EcoleController extends AbstractController
 
     // fonctionj pour AJOUTER  une école 
     #[Route('/addEcole', name: 'ecole_add')]
+    #[IsGranted('ROLE_ADMIN')]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ecole = new Ecole();
@@ -123,6 +130,7 @@ class EcoleController extends AbstractController
     
     // fonction pour MODIFIER les informations d'une école
     #[Route('/ecole/{id}/edit', name: 'app_ecole_edit')]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, Ecole $ecole, ManagerRegistry $doctrine): Response
     {
         // Récupérer l'utilisateur connecté
@@ -169,6 +177,7 @@ class EcoleController extends AbstractController
 
     // fonction pour SUPPRIMER une école dédiée
     #[Route('/ecole/{id}/supprimer', name: 'app_ecole_delete')]
+    #[IsGranted('ROLE_USER')]  
     public function delete(ManagerRegistry $doctrine, Ecole $ecole): Response
     {
         // Récupérer l'utilisateur connecté

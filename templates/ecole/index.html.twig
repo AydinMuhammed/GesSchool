@@ -124,30 +124,39 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
                                     <th scope="col" class="px-6 py-4">Nom</th>
                                     <th scope="col" class="px-6 py-4">Ville</th>
                                     <th scope="col" class="px-6 py-4">Email</th>
+                                    <th scope="col" class="px-6 py-4">Auditeur</th>
                                     <th scope="col" class="px-6 py-4">Détails</th>
                                     <th scope="col" class="px-6 py-4">Supprimer</th>
                                 </tr>
                             </thead>
                             <tbody id="triBody">
                                 {% for ecole in ecoles %}
-                                <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ ecole.getId() }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ ecole.getNomEcole }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ ecole.getVilleEcole }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ ecole.getMailEcole }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <a href="{{ path('app_ecole_show', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0" style="background-color: transparent;">
-                                            <img class="mx-auto h-5 w-auto" src="{{asset('images/edition.png')}}" alt="edition">
-                                        </a>
-                                    </td>
-  
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <a href="{{ path('app_ecole_delete', {'id': ecole.getId()}) }}" class="delete-school inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0" data-id="{{ ecole.getId() }}" style="background-color: transparent;">
-                                            <img class="mx-auto h-5 w-auto" src="{{asset('images/effacer.png')}}" alt="effacer" >
-                                        </a>
-                                    </td>
-          
-                                </tr>
+                                    {% if ecole.getUsers() is not empty or is_granted('ROLE_ADMIN') %}
+                                        {% if is_granted('ROLE_ADMIN') or app.user in ecole.getUsers() %}
+                                            <tr class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-550">
+                                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ ecole.getId() }}</td>
+                                                <td class="whitespace-nowrap px-6 py-4">{{ ecole.getNomEcole() }}</td>
+                                                <td class="whitespace-nowrap px-6 py-4">{{ ecole.getVilleEcole() }}</td>
+                                                <td class="whitespace-nowrap px-6 py-4">{{ ecole.getMailEcole() }}</td>
+                                                <td class="whitespace-nowrap px-6 py-4">
+                                                    {# Relation manyToMany #}
+                                                    {% for user in ecole.getUsers() %}
+                                                        {{ user.getNom() }} {{ user.getPrenom() }}<br>
+                                                    {% endfor %}
+                                                </td>
+                                                <td class="whitespace-nowrap px-6 py-4">
+                                                    <a href="{{ path('app_ecole_show', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0" style="background-color: transparent;">
+                                                        <img class="mx-auto h-5 w-auto" src="{{ asset('images/edition.png') }}" alt="edition">
+                                                    </a>
+                                                </td>
+                                                <td class="whitespace-nowrap px-6 py-4">
+                                                    <a href="{{ path('app_ecole_delete', {'id': ecole.getId()}) }}" class="delete-school inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 mt-4 lg:mt-0" data-id="{{ ecole.getId() }}" style="background-color: transparent;">
+                                                        <img class="mx-auto h-5 w-auto" src="{{ asset('images/effacer.png') }}" alt="effacer">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
                                 {% endfor %}
                             </tbody>
                         </table>
