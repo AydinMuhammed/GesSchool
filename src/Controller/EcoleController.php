@@ -61,9 +61,10 @@ class EcoleController extends AbstractController
     {
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
+        // Vérifier si l'utilisateur est connecté et s'il a le rôle admin ou si l'école est associée à l'utilisateur
 
-        // Vérifier si l'utilisateur est connecté et si l'école est associée à l'utilisateur
-        if ($user && $ecole->getUsers()->contains($user)) {
+        if ($user && ($this->isGranted('ROLE_ADMIN') || $ecole->getUsers()->contains($user))) {
+
             $eleves = $entityManager->createQuery(
                 'SELECT e
                 FROM App\Entity\Eleve e
