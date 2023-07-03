@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -32,8 +33,11 @@ class ClasseController extends AbstractController
 
     //pour récuprer les info d'une classe secltionné    
     #[Route("/classe/{id}", name:"app_classe_show")]
+    #[IsGranted('ROLE_USER')]
     public function show(Classe $classe): Response
     {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
         return $this->render('classe/show_classe.html.twig', [
             'classe' => $classe,
         ]);
@@ -42,8 +46,11 @@ class ClasseController extends AbstractController
 
         // fonction pour modifier les information d'une classe
         #[Route('/classe/{id}/edit', name: 'app_classe_edit')]
+        #[IsGranted('ROLE_USER')]
         public function edit(Request $request, Classe $classe, ManagerRegistry $doctrine): Response
         {
+            // Récupérer l'utilisateur connecté
+            $user = $this->getUser();
             $form = $this->createFormBuilder($classe)
                 ->add('nom_classe', TextType::class, [
                     'label' => 'Nom de la classe'
@@ -80,11 +87,15 @@ class ClasseController extends AbstractController
             $this->managerRegistry = $managerRegistry;
         }
     
-        // ...
+        // ...Fonction ajouter classe
     
         #[Route('/ecole/{id}/addClasse', name: 'add_classe')]
+        #[IsGranted('ROLE_USER')]
         public function addClasse(Request $request, $id): Response
         {
+            // Récupérer l'utilisateur connecté
+            $user = $this->getUser();
+
             $entityManager = $this->managerRegistry->getManager();
     
             // Récupérer l'école à partir de l'ID
@@ -124,8 +135,11 @@ class ClasseController extends AbstractController
 
 
         #[Route('/classe/{id}/supprimer', name: 'app_classe_delete')]
+        #[IsGranted('ROLE_ADMIN')]
         public function delete(EntityManagerInterface $entityManager, Classe $classe): Response
         {
+             // Récupérer l'utilisateur connecté
+            $user = $this->getUser();
             // Vérifier si l'utilisateur est connecté et a les autorisations nécessaires
 
             // Supprimer les élèves liés à la classe
@@ -140,5 +154,8 @@ class ClasseController extends AbstractController
 
             // Rediriger vers une autre page après la suppression de la classe
             return $this->redirectToRoute('app_ecole_show', ['id' => $classe->getEcole()->getId()]);
+
+            // Rediriger vers une page d'erreur ou une autre action appropriée
+        throw $this->createNotFoundException('L\'école demandée n\'existe pas ou vous n\'avez pas l\'autorisation de la supprimer.');
         }
 }
