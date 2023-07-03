@@ -108,9 +108,10 @@
                 Liste des classes :
             </h1>
             <!-- ajouter lien pour le bouton ajouter sur un formulaire -->
-            <a href="" class="inline-block px-4 py-2 leading-none border rounded text-white bg-yellow-500 hover:bg-yellow-600 justify-self-start">
+            <a href="{{ path('add_classe', {'id': ecole.id}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-yellow-500 hover:bg-yellow-600 justify-self-start">
                 Ajouter une classe pour l'école "{{ ecole.getNomEcole() }}"
             </a>
+
         </div>
 
         <div class="col-span-2">

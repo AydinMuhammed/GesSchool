@@ -115,10 +115,6 @@ class EcoleController extends AbstractController
         }
 
         
-        
-        
-        
-
 
         return $this->render('ecole/add_ecole.html.twig', [
             'ecole' => $ecole,
@@ -177,7 +173,7 @@ class EcoleController extends AbstractController
 
     // fonction pour SUPPRIMER une école dédiée
     #[Route('/ecole/{id}/supprimer', name: 'app_ecole_delete')]
-    #[IsGranted('ROLE_USER')]  
+    #[IsGranted('ROLE_ADMIN')]  
     public function delete(ManagerRegistry $doctrine, Ecole $ecole): Response
     {
         // Récupérer l'utilisateur connecté

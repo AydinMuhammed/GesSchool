@@ -99,10 +99,11 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
       <input id="Recherche" type="text" class="py-2 text-sm text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900" placeholder="Recherche..." autocomplete="off">
     </div>
   </form>
-
+{% if is_granted('ROLE_ADMIN') %}
   <a href="{{ path('ecole_add') }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-yellow-500 hover:bg-yellow-600 ml-8 mt-4 lg:mt-0">
         Ajouter une école
     </a>
+{% endif %}    
 </div>
 
 
@@ -124,7 +125,7 @@ et     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.
                                     <th scope="col" class="px-6 py-4">Nom</th>
                                     <th scope="col" class="px-6 py-4">Ville</th>
                                     <th scope="col" class="px-6 py-4">Email</th>
-                                    <th scope="col" class="px-6 py-4">Auditeur</th>
+                                    <th scope="col" class="px-6 py-4">User</th>
                                     <th scope="col" class="px-6 py-4">Détails</th>
                                     <th scope="col" class="px-6 py-4">Supprimer</th>
                                 </tr>

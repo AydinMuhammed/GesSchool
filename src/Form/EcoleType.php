@@ -3,13 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Ecole;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Doctrine\ORM\EntityRepository;
+
 
 class EcoleType extends AbstractType
 {
@@ -35,7 +40,18 @@ class EcoleType extends AbstractType
             ->add('villeEcole', TextType::class, [
                 'label' => 'Ville',
                 'required' => true
+            ])
+            ->add('users', EntityType::class, [
+                'label' => 'Utilisateurs',
+                'class' => User::class,
+                'choice_label' => 'email',
+                'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
+                'required' => false
             ]);
+
+
             //->add('dateCreation', DateTimeType::class, [
             //    'label' => 'Date de création',
             //    'disabled' => true,

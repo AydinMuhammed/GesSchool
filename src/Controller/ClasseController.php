@@ -4,14 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Ecole;
 use App\Entity\Classe;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Form\ClasseType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+
+
 
 class ClasseController extends AbstractController
 {
@@ -67,12 +71,52 @@ class ClasseController extends AbstractController
         }
 
 
+ 
 
+        private $managerRegistry;
 
-
-
-
-
+        public function __construct(ManagerRegistry $managerRegistry)
+        {
+            $this->managerRegistry = $managerRegistry;
+        }
+    
+        // ...
+    
+        #[Route('/ecole/{id}/addClasse', name: 'add_classe')]
+        public function addClasse(Request $request, $id): Response
+        {
+            $entityManager = $this->managerRegistry->getManager();
+    
+            // Récupérer l'école à partir de l'ID
+            $ecole = $entityManager->getRepository(Ecole::class)->find($id);
+    
+            // Vérifier si l'école existe
+            if (!$ecole) {
+                throw $this->createNotFoundException('L\'école n\'existe pas.');
+            }
+    
+            $classe = new Classe();
+            $classe->setEcole($ecole);
+    
+            $form = $this->createForm(ClasseType::class, $classe);
+    
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Effectuer les opérations de sauvegarde de la classe et de liaison avec l'école
+                $entityManager->persist($classe);
+                $entityManager->flush();
+    
+                // Rediriger vers la page de détails de l'école après avoir ajouté la classe
+                return $this->redirectToRoute('app_ecole_show', ['id' => $ecole->getId()]);
+            }
+    
+            return $this->render('classe/add_classe.html.twig', [
+                'form' => $form->createView(),
+                'ecole' => $ecole,
+            ]);
+        }
+    
+    
 
 
 

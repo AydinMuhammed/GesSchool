@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une école{% endblock %}
+
+{% block body %}
+    
+
+<h3 class="mb-2.5 text-3xl font-medium leading-tight">Ajouter une école</h3>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    {{ form_start(form) }}
+                    <div class="mb-4">
+                        {{ form_label(form.nom_classe, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                        {{ form_widget(form.nom_classe, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_errors(form.nom_classe) }}
+                    </div>
+                    <div class="mb-4">
+                        {{ form_label(form.section_classe, null, {'label_attr': {'class': 'block text-gray-700 font-bold mb-2'}}) }}
+                        {{ form_widget(form.section_classe, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_errors(form.section_classe) }}
+                    </div>
+                    {{ form_widget(form.ecole) }} {# Champ ecole masqué #}
+                    <button type="submit" class="inline-block px-4 py-2 leading-none border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-outline">{{ 'Valider'|trans }}</button>
+                    <a href="{{ path('app_ecole', {'id': ecole.getId()}) }}" class="inline-block px-4 py-2 leading-none border rounded text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:shadow-outline">{{ 'Annuler'|trans }}</a>     
+            {{ form_end(form) }}
+</div>
+{% endblock %}
